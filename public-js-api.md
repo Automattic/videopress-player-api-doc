@@ -1,7 +1,7 @@
 # VideoPress player API
 1. [Initialize the api](#initialize-the-api)
 	- [Iframe api (typical case)](#iframe-api)
-	- [Iframe api with a known id](#known-iframe-id)
+	- [Iframe api with a known id](#iframe-api-with-a-known-id)
 	- [JS api (advanced case)](#js-api)
 
 2. [Namespaces](#namespaces)
