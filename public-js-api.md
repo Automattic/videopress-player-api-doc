@@ -278,7 +278,7 @@ Gets an evenly distributed sample of thumbnails. Can only be called after video 
 - **count** (number) The number of thumbnails to retrieve
 
 ##### Return values
-- **thumbnails** (Array<object>) A series of evenly distributed thumbnails represented by their position in a sprite sheet.
+- **thumbnails** (Array&lt;object&gt;) A series of evenly distributed thumbnails represented by their position in a sprite sheet.
 - **size** (object) The width and height of a thumbnail in the sprite sheet.
 
 ##### Example
