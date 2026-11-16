@@ -286,6 +286,23 @@ const videoDurationInSeconds = await api.info.duration();
 const videoDurationInMilliSeconds = await api.info.duration( true );
 ```
 
+##### dimensions
+
+Get the intrinsic video dimensions, aspect ratio and orientation. Known from the video info response before playback, then confirmed by the media metadata once it loads; null until either arrives.
+
+###### Return values
+
+- **dimensions** (object) `{ width, height, aspectRatio, orientation, source }` — width/height in pixels, aspectRatio as width divided by height, orientation one of `portrait`, `landscape` or `square`, source `info` (video info response) or `media` (media metadata). Null when not known yet.
+
+###### Example
+
+```javascript
+const dimensions = await api.info.dimensions();
+if ( dimensions && 'portrait' === dimensions.orientation ) {
+	// Size the embed box for a vertical video.
+}
+```
+
 ##### guid
 
 Get the current video GUID
@@ -362,6 +379,22 @@ Gets an evenly distributed sample of thumbnails. Can only be called after video 
 const thumbs = await api.info.getThumbnailSample();
 ```
 
+##### keyboardShortcuts
+
+Get the keyboard shortcuts the player answers to while it has focus. The player does not act on a key while Ctrl, Alt or Command is held, or while a text field has focus.
+
+###### Return values
+
+- **shortcuts** (Array&lt;object&gt;) One entry per shortcut: `keys` (the `KeyboardEvent.key` values it answers to, compared without regard to case), `shift` (whether Shift must be held) and `description` (what it does, in English).
+
+###### Example
+
+```javascript
+const shortcuts = await api.info.keyboardShortcuts();
+const taken = shortcuts.flatMap( ( shortcut ) => shortcut.keys );
+// [ 'k', ' ', 'm', 'f', 'c', 'ArrowLeft', … ]
+```
+
 ##### enableWatchedSegments
 
 Enable watched segments tracking
@@ -427,6 +460,22 @@ Event triggered when media information has changed
 
 ```javascript
 api.status.onInfoUpdated( () => console.log( "Video info updated" ) );
+```
+
+##### dimensionsChanged
+
+Fired when the video shape becomes known or changes (first from the video info response, then from the media metadata when it disagrees). Not fired for rendition switches that keep the same aspect ratio.
+
+###### Return values
+
+- **dimensions** (object) `{ width, height, aspectRatio, orientation, source }`, see `info.dimensions`.
+
+###### Example
+
+```javascript
+api.info.onDimensionsChanged( ( { width, height, orientation } ) => {
+	iframe.height = ( height / width ) * iframe.clientWidth;
+} );
 ```
 
 ### status
